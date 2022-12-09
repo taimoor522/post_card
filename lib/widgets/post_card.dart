@@ -1,51 +1,45 @@
 import 'package:flutter/material.dart';
-import 'package:social_media/gradient_round_border.dart';
+import 'package:post_card/widgets/card_icon.dart';
 
-import 'card_icon.dart';
+import '../constants.dart';
+import '../model/post.dart';
 import 'clipper.dart';
-import 'constants.dart';
+import 'gradient_round_border.dart';
 
 class PostCard extends StatefulWidget {
-  final String profile;
-  final String post;
-  final String name;
-  final String time;
-  const PostCard(
-      {super.key,
-      required this.profile,
-      required this.post,
-      required this.name,
-      required this.time});
+  final PostModel post;
+  const PostCard({
+    super.key,
+    required this.post,
+  });
 
   @override
   State<PostCard> createState() => _PostCardState();
 }
 
 class _PostCardState extends State<PostCard> with SingleTickerProviderStateMixin {
-  late AnimationController _controller;
-  late Animation<double> _animation;
-
+  late final AnimationController _controller;
+  late final Animation<double> _animation;
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 500),
-    );
+    _controller = AnimationController(vsync: this, duration: const Duration(milliseconds: 500));
+
     _animation = CurvedAnimation(parent: _controller, curve: Curves.decelerate)
-        .drive(Tween<double>(begin: 80, end: 300));
+        .drive(Tween<double>(begin: 75, end: 300));
   }
 
   @override
   Widget build(BuildContext context) {
     return AnimatedBuilder(
       animation: _controller,
-      builder: (_, __) {
+      builder: (context, _) {
         return GestureDetector(
-          onTap: () => _controller.isCompleted ? _controller.reverse() : _controller.forward(),
+          onTap: () {
+            _controller.isCompleted ? _controller.reverse() : _controller.forward();
+          },
           child: Container(
-            padding: const EdgeInsets.only(top: 5),
-            margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 3.5),
+            margin: const EdgeInsets.symmetric(vertical: 3.5, horizontal: 10),
             height: _animation.value,
             decoration: BoxDecoration(
               gradient: greyGradient,
@@ -56,16 +50,20 @@ class _PostCardState extends State<PostCard> with SingleTickerProviderStateMixin
               children: [
                 ListTile(
                   leading: GradientBorder(
-                      child: Image(
-                    image: AssetImage(widget.profile),
-                    fit: BoxFit.cover,
-                  )),
+                    child: Image.asset(
+                      widget.post.profilePicture,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
                   title: Text(
-                    widget.name,
-                    style: const TextStyle(fontFamily: patrickHand, fontSize: 20),
+                    widget.post.author,
+                    style: const TextStyle(
+                      fontSize: 20,
+                      fontFamily: patrickHand,
+                    ),
                   ),
                   subtitle: Text(
-                    widget.time,
+                    widget.post.timeAgo,
                     style: const TextStyle(fontSize: 10),
                   ),
                   trailing: Row(
@@ -82,7 +80,7 @@ class _PostCardState extends State<PostCard> with SingleTickerProviderStateMixin
                 if (_animation.value >= 150)
                   Expanded(
                     child: Stack(
-                      alignment: Alignment.bottomCenter,
+                      alignment: Alignment.bottomRight,
                       children: [
                         ClipPath(
                           clipper: ContainerClipper(),
@@ -90,10 +88,9 @@ class _PostCardState extends State<PostCard> with SingleTickerProviderStateMixin
                             width: double.infinity,
                             height: 250,
                             decoration: BoxDecoration(
+                              gradient: greyGradient,
                               image: DecorationImage(
-                                image: AssetImage(widget.post),
-                                fit: BoxFit.cover,
-                              ),
+                                  image: AssetImage(widget.post.postPicture), fit: BoxFit.cover),
                             ),
                           ),
                         ),
@@ -101,13 +98,9 @@ class _PostCardState extends State<PostCard> with SingleTickerProviderStateMixin
                           padding: const EdgeInsets.only(bottom: 10, right: 20),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              Row(
-                                children: const [
-                                  CardIcon(Icons.mode_comment_rounded),
-                                  CardIcon(Icons.favorite_rounded),
-                                ],
-                              ),
+                            children: const [
+                              CardIcon(Icons.mode_comment_rounded),
+                              CardIcon(Icons.favorite_rounded),
                             ],
                           ),
                         ),

@@ -25,5 +25,5 @@ const greyGradient = LinearGradient(
 const floatingActionButton = FloatingActionButton(
   onPressed: null,
   backgroundColor: pink,
-  child: Icon(Icons.add),
+  child: Icon(Icons.add, color: white),
 );

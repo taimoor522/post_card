@@ -28,6 +28,7 @@ class ContainerClipper extends CustomClipper<Path> {
     path0.lineTo(0, size.height * 0.0986800);
     path0.close();
 
+    // add this line at the end
     return path0;
   }
 

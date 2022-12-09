@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-
-import 'constants.dart';
-import 'gradient_round_border.dart';
+import 'package:post_card/constants.dart';
+import 'package:post_card/widgets/gradient_round_border.dart';
 
 class Appbar extends StatelessWidget with PreferredSizeWidget {
   const Appbar({super.key});
@@ -10,10 +9,10 @@ class Appbar extends StatelessWidget with PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       toolbarHeight: 60,
-      elevation: 0,
       backgroundColor: black,
+      elevation: 0,
       title: const Text(
-        "Friend's Posts",
+        'Friend\'s Post',
         style: TextStyle(
           color: pink,
           fontSize: 30,
@@ -26,7 +25,7 @@ class Appbar extends StatelessWidget with PreferredSizeWidget {
             child: Icon(Icons.add),
           ),
         ),
-        SizedBox(width: 20),
+        SizedBox(width: 10),
       ],
     );
   }

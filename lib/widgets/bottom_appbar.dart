@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'constants.dart';
+import '../constants.dart';
 
 class BottomAppbar extends StatelessWidget {
   const BottomAppbar({
@@ -11,6 +11,7 @@ class BottomAppbar extends StatelessWidget {
   Widget build(BuildContext context) {
     return BottomAppBar(
       color: pink,
+      elevation: 0,
       shape: const CircularNotchedRectangle(),
       notchMargin: 10,
       child: SizedBox(
@@ -20,8 +21,8 @@ class BottomAppbar extends StatelessWidget {
           children: const [
             Icon(Icons.home_rounded, size: 30),
             Icon(Icons.email_rounded, size: 30),
-            SizedBox(width: 20),
-            Icon(Icons.notifications_rounded, size: 30),
+            SizedBox(width: 10),
+            Icon(Icons.notifications, size: 30),
             Icon(Icons.person_rounded, size: 30),
           ],
         ),
